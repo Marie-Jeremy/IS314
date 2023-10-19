@@ -10,6 +10,8 @@
     <div class="container">
         <div class="title">Registration</div>
         <div class="content">
+        <a href="{{ url()->previous() }}" class="back-button">Back</a>
+        <p><strong>Asterisk<span class="required">*</span></strong> Indicates a required field.</p>
             <form action="{{ route('register.store') }}" method="POST">
                 @csrf
                 <div class="user-details">

@@ -122,8 +122,6 @@
     </div>
 </div>
 
-
-<!--banner ends-->
 @if(isset($successMessage))
 <div class="alert alert-success">
     {{ $successMessage }}
@@ -149,11 +147,18 @@
             {{ $recipe->short_description }}
             </p>
             <br/>
-            @if ($recipe->video_recipe === 'yes' && !empty($recipe->video_embed_code))
+
+            @if (!empty($recipe->video_path))
+    <div class="recipe-video">
+        <a href="{{ asset('storage/' . $recipe->video_path) }}" target="_blank" class="btn btn-primary">Watch Video</a>
+    </div>
+@elseif ($recipe->video_recipe === 'yes' && !empty($recipe->video_embed_code))
     <div class="recipe-video">
         <a href="{{ $recipe->video_embed_code }}" target="_blank" class="btn btn-primary">Watch Video</a>
     </div>
 @endif
+
+
 
 
             <ul class="social-icons-chef">
@@ -169,6 +174,11 @@
 
                     <div class="recipe-detail-body">
                     <a href="{{ route('edit-recipe', ['id' => $recipe->id]) }}" class="print-button"><i class="fa fa-pencil"></i>Edit Recipe</a>
+                    <form action="{{ route('delete-recipe', ['id' => $recipe->id]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="print-button"><i class="fa fa-trash"></i>Delete Recipe</button>
+            </form>
 
                     <ul class="pre-tags">
                         <li><span>Cuisine : </span> {{ $recipe->cuisine }}</li>

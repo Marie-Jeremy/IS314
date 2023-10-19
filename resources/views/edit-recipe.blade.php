@@ -6766,21 +6766,34 @@ div.widget-measurements .default-btn {
                 <label for="title">Recipe Title</label>
                 <input type="text" name="title" id="title" value="{{ $recipe->title }}" required>
                 <br/>
+
                 <label for="short-description">Short Description</label>
                 <textarea class="short-text" name="short-des" id="short-description" cols="30" rows="10" required>{{ $recipe->short_description }}</textarea>
+
                 <label for="recipe-content">Recipe Contents</label>
                 <textarea name="content" id="recipe-content" cols="30" rows="10">{{ $recipe->content }}</textarea>
+                
                 <label for="upload-image">Upload Images</label>
                 <input type="file" name="fileUpload" id="upload-image">
+                <form id="delete-image-form" action="{{ route('delete-image', ['id' => $recipe->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <label for="existing-image">Existing Image Path</label>
+                                @if ($recipe->image)
+                                <button type="button" id="delete-image-button">
+                                        <i class="fa fa-trash delete"></i> Delete Image </button>
+                                @endif
+                            </form>
+                <input type="text" name="existing-image" value="{{ $recipe->image }}" readonly>
+
                 <fieldset class="ingredient-set">
                     <label for="ingredients">Ingredients</label>
                     <ul class="list-sortable ingredients-list">
                     @foreach ($recipe->ingredients as $index => $ingredient)
-
                         <li>
                             <div class="add-fields">
                                 <span class="handler-list"><i class="fa fa-arrows"></i></span>
-                                <input type="text" name="ingredients[{{ $index }}]" value="{{ $ingredient }}"  id="ingredients"/>
+                                <input type="text" name="ingredients[]" value="{{ $ingredient }}" id="ingredients"/>
                                 <span class="del-list"><i class="fa fa-trash delete-ingredient"></i></span>
                             </div>
                         </li>
@@ -6795,11 +6808,10 @@ div.widget-measurements .default-btn {
                     <label for="steps">Steps</label>
                     <ul class="list-sortable steps">
                     @foreach ($recipe->steps as $index => $step)
-
                         <li>
                             <div class="add-fields">
                                 <span class="handler-list"><i class="fa fa-arrows"></i></span>
-                                <textarea class="short-text" name="steps[{{ $index }}]" id="steps[]" cols="30" rows="10">{{ $step }}</textarea>
+                                <textarea class="short-text" name="steps[]" value="{{ $step }}" id="steps[]" cols="30" rows="10">{{ $step }}</textarea>
                                 <span class="del-list"><i class="fa fa-trash delete-step"></i></span>
                             </div>
                         </li>
@@ -6813,15 +6825,28 @@ div.widget-measurements .default-btn {
                 <label class="video-based-recipe">Video Based Recipe</label>
                 <br/>
                 <label for="radio-yes">
-                    <input class="radio-btn" id="radio-yes" type="radio" name="video-recipe" value="{{ $recipe->vide_recipe }}"  /><span class="radio-text">yes</span>
+                    <input class="radio-btn" id="radio-yes" type="radio" name="video-recipe" value="yes" @if ($recipe->video_recipe === 'yes') checked @endif/><span class="radio-text">yes</span>
                 </label>
                 <label for="radio-no">
-                    <input class="radio-btn" id="radio-no" type="radio" name="video-recipe" value="no"  /> <span class="radio-text">no</span>
+                    <input class="radio-btn" id="radio-no" type="radio" name="video-recipe" value="no" @if ($recipe->video_recipe === 'no') checked @endif /> <span class="radio-text">no</span>
                 </label>
                 <br/>
                 <br/>
-                <label for="video-embed">Video Embed Code</label>
-                <textarea class="short-text" name="embed-code" value="{{ $recipe->viedo_embeded_code }}" id="video-embed" cols="30" rows="10"></textarea>
+                <div id="video-embed-code-container" @if ($recipe->video_recipe === 'yes') style="display: block;" @else style="display: none;" @endif>
+
+                <label for="video-embed">Video Url</label>
+                <p>Please provide either the url of your video or upload the video file. If you choose to upload a video, make sure it's in a supported format (e.g., MP4).</p>
+                <textarea class="short-text" name="embed-code" id="video-embed" cols="30" rows="10">{{ $recipe->video_embed_code }}</textarea>
+                <label for="video-upload">Upload Video</label>
+                <input type="file" name="video-upload" id="video-upload">
+                {{-- Display the existing video URL if it's not empty --}}
+    @if (!empty($recipe->video_path))
+    <div class="existing-video">
+        <label>Existing Video:</label>
+        <a href="{{ asset('storage/' . $recipe->video_path) }}" target="_blank">{{ asset('storage/' . $recipe->video_path) }}</a>
+    </div>
+    @endif
+                </div>
 
                 <div class="row">
                     <div class="col-sm-6">
@@ -6856,45 +6881,45 @@ div.widget-measurements .default-btn {
                     <div class="col-sm-6">
                         <label for="recipe-type">Recipe Type</label>
                         <select name="recipe-type" id="recipe-type" value="{{ $recipe->recipe_type }}" class="advance-selectable">
-                            <option value="t0" selected="selected">None</option>
-                            <option value="t1">Breakfast</option>
-                            <option value="t2">Lunch</option>
-                            <option value="t3">Dinner</option>
-                            <option value="t4">Dessert</option>
+                            <option selected="selected">None</option>
+                            <option>Breakfast</option>
+                            <option>Lunch</option>
+                            <option>Dinner</option>
+                            <option>Dessert</option>
                         </select>
                     </div>
                     <div class="col-sm-6">
                         <label for="cuisine-select">Cuisine</label>
                         <select name="cuisine" id="cuisine-select" value="{{ $recipe->cuisine }}" class="advance-selectable">
-                            <option value="c0" selected="selected">None</option>
-                            <option value="c1">Indian</option>
-                            <option value="c2">Chinese</option>
-                            <option value="c3">Italian</option>
-                            <option value="c4">European</option>
+                            <option selected="selected">None</option>
+                            <option>Indian</option>
+                            <option>Chinese</option>
+                            <option>Italian</option>
+                            <option>European</option>
                         </select>
                     </div>
                     <div class="col-sm-6">
                         <label for="course-select">Course</label>
                         <select name="course" id="course-select" value="{{ $recipe->course }}" class="advance-selectable">
-                            <option value="cr0" selected="selected">None</option>
-                            <option value="cr1">Soup</option>
-                            <option value="cr2">Salad</option>
-                            <option value="cr3">Entree</option>
-                            <option value="cr4">Dessert</option>
+                            <option selected="selected">None</option>
+                            <option>Soup</option>
+                            <option>Salad</option>
+                            <option>Entree</option>
+                            <option>Dessert</option>
                         </select>
                     </div>
                     <div class="col-sm-6">
                         <label for="skill">Skill Level</label>
                         <select name="skill" id="skill" value="{{ $recipe->skill }}" class="advance-selectable">
-                            <option value="s0" selected="selected">None</option>
-                            <option value="s1">Easy</option>
-                            <option value="s2">Medium</option>
-                            <option value="s3">Professional</option>
+                            <option selected="selected">None</option>
+                            <option>Easy</option>
+                            <option>Medium</option>
+                            <option>Professional</option>
                         </select>
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="recipe-submit-btn">Submit Your Recipe</button>
+                    <button type="submit" class="recipe-submit-btn">Update Your Recipe</button>
                 </div>
             </form>
         </div>
@@ -7036,6 +7061,55 @@ div.widget-measurements .default-btn {
             if (event.target.classList.contains('delete-ingredient')) {
                 const ingredientItem = event.target.closest('li');
                 ingredientItem.remove();
+            }
+        });
+    });
+</script>
+
+<script>
+    // Add JavaScript to toggle the video-embed-code-container based on the selected radio button
+    document.addEventListener('DOMContentLoaded', function () {
+        const radioYes = document.getElementById('radio-yes');
+        const videoEmbedContainer = document.getElementById('video-embed-code-container');
+
+        // Initial display based on the selected radio button on page load
+        if (radioYes.checked) {
+            videoEmbedContainer.style.display = 'block';
+        }
+
+        // Toggle display when radio buttons change
+        radioYes.addEventListener('change', function () {
+            if (this.checked) {
+                videoEmbedContainer.style.display = 'block';
+            }
+        });
+
+        document.getElementById('radio-no').addEventListener('change', function () {
+            if (this.checked) {
+                videoEmbedContainer.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#delete-image-button').click(function() {
+            if (confirm('Are you sure you want to delete this image?')) {
+                $.ajax({
+                    url: "{{ route('delete-image', ['id' => $recipe->id]) }}",
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        // Handle success (e.g., hide the image or refresh the page)
+                    },
+                    error: function(error) {
+                        // Handle error (e.g., show an error message)
+                    }
+                });
             }
         });
     });

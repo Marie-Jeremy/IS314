@@ -6764,6 +6764,7 @@ div.widget-measurements .default-btn {
 </div>
 
     <div class="recipe-detail-body">
+    <a href="{{ route('generate-pdf', ['id' => $recipe->id]) }}" class="print-button"><i class="fa fa-download"></i> Download Recipe</a>
                     <ul class="pre-tags">
                         <li><span>Cuisine : </span> {{ $recipe->cuisine }}</li>
                         <li><span>Course : </span> {{ $recipe->course }}</li>

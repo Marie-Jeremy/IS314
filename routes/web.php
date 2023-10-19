@@ -101,4 +101,8 @@ Route::get('/edit-recipe/{id}', [App\Http\Controllers\SubmitRecipeController::cl
 Route::put('/update-recipe/{id}', [App\Http\Controllers\SubmitRecipeController::class, 'updateRecipe'])->name('update-recipe');
 Route::post('/recipes/{recipe}/rate', [App\Http\Controllers\SubmitRecipeController::class, 'rate'])->name('recipes.rate');
 Route::get('/recipes/{id}', [App\Http\Controllers\SubmitRecipeController::class, 'showRecipeDetails'])->name('recipe.details');
+Route::delete('/recipes/{id}', [App\Http\Controllers\SubmitRecipeController::class, 'delete'])->name('delete-recipe');
+Route::get('/generate-pdf/{id}', [App\Http\Controllers\SubmitRecipeController::class, 'generatePDF'])->name('generate-pdf');
+Route::delete('/delete-image/{id}', [App\Http\Controllers\SubmitRecipeController::class, 'deleteImage'])->name('delete-image');
+
 
