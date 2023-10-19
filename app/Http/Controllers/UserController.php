@@ -20,8 +20,7 @@ class UserController extends Controller
         'username' => 'required|string|max:255|unique:users',
         'email' => 'required|string|email|max:255|unique:users',
         'phone_number' => 'nullable|string|max:255',
-        'password' => 'required|string|min:8',
-        
+        'password' => 'required|string|min:8', 
         
     ]);
 
@@ -35,6 +34,10 @@ class UserController extends Controller
     $user->password = bcrypt($request->input('password'));
     $user->gender = $request->input('gender');
     $user->role_as =  '0';
+
+    $user->recipe_type = is_array($request->input('recipe_type')) ? implode(',', $request->input('recipe_type')) : $request->input('recipe_type');
+    $user->cuisine = is_array($request->input('cuisine')) ? implode(',', $request->input('cuisine')) : $request->input('cuisine');
+    
     $user->save();
 
     Session::flash('success', 'Registration successful. You can now log in.');

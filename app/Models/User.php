@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'recipe_type',
+        'cuisine',
     ];
 
     /**
@@ -31,6 +33,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'recipe_type', 
+        'cuisine',     
     ];
 
     /**
@@ -40,11 +44,13 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'recipe_type' => 'json', // Assuming it's stored as a JSON array
+        'cuisine' => 'json',     // Assuming it's stored as a JSON array
     ];
 
-    public function ratings()
-{
-    return $this->hasMany(Rating::class);
-}
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 
 }

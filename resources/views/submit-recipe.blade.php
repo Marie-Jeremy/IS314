@@ -148,9 +148,6 @@
 
                 <label for="short-description">Short Description<span class="required">*</span></label>
                 <textarea class="short-text" name="short-des" id="short-description" cols="30" rows="10">{{ old('short-des') }}</textarea>
-
-                <label for="recipe-content">Recipe Contents</label>
-                <textarea name="content" id="recipe-content" cols="30" rows="10">{{ old('content') }}</textarea>
                 
                 <label for="upload-image">Upload Images<span class="required">*</span></label>
                 <p>Please upload images in formats such as JPG, PNG, or GIF, and make sure they are clear and well-lit to showcase your delicious recipes.</p>
@@ -158,6 +155,7 @@
 
                 <fieldset class="ingredient-set">
                     <label for="ingredients">Ingredients<span class="required">*</span></label>
+                    <p>Enter the ingredients required for your recipe. Each ingredient should be added in a separate block. To add a new ingredient, click the "Add Ingredient(+)" button and continue this process for each ingredient.</p>
                     <ul class="list-sortable ingredients-list">
                     @if(old('ingredients'))
             @foreach(old('ingredients') as $ingredient)
@@ -186,6 +184,7 @@
 
                 <fieldset class="ingredient-set">
                     <label for="steps">Steps<span class="required">*</span></label>
+                    <p>Provide the preparation steps for your recipe. Each step should be added in a separate block. To add a new step, click the "Add Step(+)" button, and continue this process for each step in your recipe.</p>
                     <ul class="list-sortable steps">
                     @if(old('steps'))
             @foreach(old('steps') as $step)
@@ -232,10 +231,6 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <label for="yield">Yield</label>
-                        <input type="text" name="yield" id="yield"/>
-                    </div>
-                    <div class="col-sm-6">
                         <label for="servings">Servings</label>
                         <input type="text" name="servings" id="servings"/>
                     </div>
@@ -256,7 +251,7 @@
                     </div>
                 </div>
 
-                <label for="tags">Tags<span class="required">*</span></label>
+                <label for="tags">Tags</label>
                 <input type="text" name="tags" id="tags"/>
 
                 <div class="row">
@@ -280,16 +275,7 @@
                             <option>European</option>
                         </select>
                     </div>
-                    <div class="col-sm-6">
-                        <label for="course-select">Course</label>
-                        <select name="course" id="course-select" class="advance-selectable">
-                            <option selected="selected">None</option>
-                            <option>Soup</option>
-                            <option>Salad</option>
-                            <option>Entree</option>
-                            <option>Dessert</option>
-                        </select>
-                    </div>
+ 
                     <div class="col-sm-6">
                         <label for="skill">Skill Level</label>
                         <select name="skill" id="skill" class="advance-selectable">

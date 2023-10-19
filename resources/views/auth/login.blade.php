@@ -11,6 +11,7 @@
 <body>
     <header id="navbar">
         <h1>Food Recipe Website</h1>
+        
         <nav>
             <ul>
                 <li><a href="/home">Home</a></li>
@@ -20,11 +21,15 @@
             </ul>
         </nav>
     </header>
-
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
     <div class="box-form">
         <div class="left">
             <div class="overlay">
-                <h1>Hello World.</h1>
+                <h1>Hello User</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Curabitur et est sed felis aliquet sollicitudin</p>
                 <span>

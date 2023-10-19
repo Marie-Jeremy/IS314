@@ -10,6 +10,8 @@ use App\Models\Recipe;
 use App\Models\User;
 use App\Models\Rating;
 use PDF;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Storage;
 
 class SubmitRecipeController extends Controller
 {
@@ -40,10 +42,9 @@ class SubmitRecipeController extends Controller
             'prep-time' => 'nullable|string',
             'cook-time' => 'nullable|string',
             'ready-in' => 'nullable|string',
-            'tags' => 'required|string',
+            'tags' => 'nullable|string',
             'recipe-type' => 'required|string',
             'cuisine' => 'required|string',
-            'course' => 'required|string',
             'skill' => 'nullable|string',
         ]);
 
@@ -98,7 +99,6 @@ if ($request->hasFile('video-upload')) {
         $recipe->tags = $request->input('tags');
         $recipe->recipe_type = $request->input('recipe-type');
         $recipe->cuisine = $request->input('cuisine');
-        $recipe->course = $request->input('course');
         $recipe->skill = $request->input('skill');
 
         $recipe->save();
@@ -133,10 +133,33 @@ if ($request->hasFile('video-upload')) {
 
 public function userHome()
 {
-    $recipes = Recipe::with('ratings')->orderBy('created_at', 'desc')->get();
+    $user = auth()->user();
 
-    return view('user_home', ['recipes' => $recipes]);
+    if ($user) {
+        // Get the user's selected recipe type and cuisine preferences
+        $recipeTypes = json_decode($user->recipe_type);
+        $cuisines = json_decode($user->cuisine);
+
+        // Query recipes based on user preferences
+        $query = Recipe::query();
+
+        if (!empty($recipeTypes)) {
+            $query->whereIn('recipe_type', $recipeTypes);
+        }
+
+        if (!empty($cuisines)) {
+            $query->whereIn('cuisine', $cuisines);
+        }
+
+        $recipes = $query->orderBy('created_at', 'desc')->paginate(5);
+
+        return view('user_home', ['recipes' => $recipes, 'recipeTypes' => $recipeTypes, 'cuisines' => $cuisines]);
+    }
+
+    // Handle the case where the user is not authenticated
+    return redirect()->route('login')->with('error', 'Please log in to view personalized recipes.');
 }
+
 
     public function editRecipe($id)
 {
@@ -174,6 +197,7 @@ public function updateRecipe(Request $request, $id)
         // If video_recipe is 'yes', set video_embed_code
         $recipe->video_embed_code = $request->input('embed-code');
 
+        
         // Delete the video if it exists (optional: you can also move it to a backup folder)
         if (!empty($recipe->video_path)) {
             Storage::delete('public/' . $recipe->video_path);
@@ -205,9 +229,19 @@ public function updateRecipe(Request $request, $id)
     $recipe->tags = $request->input('tags');
     $recipe->recipe_type = $request->input('recipe-type');
     $recipe->cuisine = $request->input('cuisine');
-    $recipe->course = $request->input('course');
     $recipe->skill = $request->input('skill');
 
+    // Handle the new image upload
+    if ($request->hasFile('new-image')) {
+        // Delete the existing image if it exists
+        if ($recipe->image) {
+            Storage::disk('public')->delete($recipe->image);
+        }
+
+        // Upload the new image
+        $newImagePath = $request->file('new-image')->store('recipe_images', 'public');
+        $recipe->image = $newImagePath;
+    }
     // Save the updated recipe
     $recipe->save();
 

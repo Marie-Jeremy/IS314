@@ -146,7 +146,22 @@
             <p>
             {{ $recipe->short_description }}
             </p>
-            <br/>
+            @if (!empty($recipe->yield))
+        <p>Yield: {{ $recipe->yield }}</p>
+    @endif
+    @if (!empty($recipe->servings))
+        <p>Servings: {{ $recipe->servings }}</p>
+    @endif
+    @if (!empty($recipe->prep_time))
+        <p>Prep-time: {{ $recipe->prep_time }}</p>
+    @endif
+    @if (!empty($recipe->cook_time))
+        <p>Cook-time: {{ $recipe->cook_time }}</p>
+    @endif
+    @if (!empty($recipe->ready_in))
+        <p>Ready-in: {{ $recipe->ready_in }}</p>
+    @endif
+
 
             @if (!empty($recipe->video_path))
     <div class="recipe-video">
@@ -182,7 +197,7 @@
 
                     <ul class="pre-tags">
                         <li><span>Cuisine : </span> {{ $recipe->cuisine }}</li>
-                        <li><span>Course : </span> {{ $recipe->course }}</li>
+                        <li><span>Recipe Type : </span> {{ $recipe->recipe_type }}</li>
                         <li><span>Skill Level : </span> {{ $recipe->skill }}</li>
                     </ul>
                     <div class="separator-post"></div>

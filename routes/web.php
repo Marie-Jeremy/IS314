@@ -78,16 +78,6 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 Route::get('/register', [App\Http\Controllers\UserController::class, 'create']);
 Route::post('/register', [App\Http\Controllers\UserController::class, 'store'])->name('register.store');
 
-Route::get('/get-premium', [App\Http\Controllers\Get_PremiumController::class, 'create']);
-Route::post('/get-premium', [App\Http\Controllers\Get_PremiumController::class, 'store'])->name('get-premium.store');
-
-Route::post('/change-request', [App\Http\Controllers\ChangeRequestController::class, 'submitForm'])->name('change-request.submit');
-
-Route::get('/customer/upgrade', [App\Http\Controllers\Admin\CustomersController::class, 'showUpgradeForm'])->name('customer.upgradeRequst');
-Route::post('upgrade-request', [App\Http\Controllers\Admin\CustomersController::class, 'storeUpgradeRequest'])->name('customer.upgradeRequest');
-
-Route::get('/payment', [App\Http\Controllers\Admin\CustomersController::class, 'showPaymentForm'])->name('payment');
-Route::post('/payment', [App\Http\Controllers\Admin\CustomersController::class, 'storePayments'])->name('payment.store');
 Route::get('/user_home', [App\Http\Controllers\Admin\CustomersController::class, 'userHome'])->name('user_home');
 
 // Route to show the recipe submission form
@@ -104,5 +94,5 @@ Route::get('/recipes/{id}', [App\Http\Controllers\SubmitRecipeController::class,
 Route::delete('/recipes/{id}', [App\Http\Controllers\SubmitRecipeController::class, 'delete'])->name('delete-recipe');
 Route::get('/generate-pdf/{id}', [App\Http\Controllers\SubmitRecipeController::class, 'generatePDF'])->name('generate-pdf');
 Route::delete('/delete-image/{id}', [App\Http\Controllers\SubmitRecipeController::class, 'deleteImage'])->name('delete-image');
-
-
+Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+Route::post('/replies', [App\Http\Controllers\ReplyController::class,'store'])->name('replies.store');

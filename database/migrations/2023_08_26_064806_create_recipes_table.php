@@ -32,7 +32,6 @@ class CreateRecipesTable extends Migration
             $table->string('tags')->nullable();
             $table->string('recipe_type')->nullable();
             $table->string('cuisine')->nullable();
-            $table->string('course')->nullable();
             $table->string('skill')->nullable();
             $table->timestamps();
         });

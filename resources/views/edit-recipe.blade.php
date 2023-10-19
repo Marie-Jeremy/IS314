@@ -6754,12 +6754,15 @@ div.widget-measurements .default-btn {
 
         <div class="submit-recipe-form">
         @if ($errors->any())
-            <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-            <div>{{ $error }}</div>
-        @endforeach
-        </div>
-        @endif
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    
         <form method="POST" action="{{ route('update-recipe', ['id' => $recipe->id]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -6769,22 +6772,15 @@ div.widget-measurements .default-btn {
 
                 <label for="short-description">Short Description</label>
                 <textarea class="short-text" name="short-des" id="short-description" cols="30" rows="10" required>{{ $recipe->short_description }}</textarea>
-
-                <label for="recipe-content">Recipe Contents</label>
-                <textarea name="content" id="recipe-content" cols="30" rows="10">{{ $recipe->content }}</textarea>
                 
-                <label for="upload-image">Upload Images</label>
-                <input type="file" name="fileUpload" id="upload-image">
-                <form id="delete-image-form" action="{{ route('delete-image', ['id' => $recipe->id]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <label for="existing-image">Existing Image Path</label>
-                                @if ($recipe->image)
-                                <button type="button" id="delete-image-button">
-                                        <i class="fa fa-trash delete"></i> Delete Image </button>
-                                @endif
-                            </form>
-                <input type="text" name="existing-image" value="{{ $recipe->image }}" readonly>
+                <label for="upload-image">Upload a New Image</label>
+<input type="file" name="new-image" id="upload-image">
+@if ($recipe->image)
+    <label for="existing-image">Existing Image</label>
+    <img id="image-preview" src="{{ asset('storage/' . $recipe->image) }}" alt="Uploaded Image" style="max-width: 100px; max-height: 100px;"/>
+@endif
+
+
 
                 <fieldset class="ingredient-set">
                     <label for="ingredients">Ingredients</label>
@@ -6823,36 +6819,35 @@ div.widget-measurements .default-btn {
                 </fieldset>
 
                 <label class="video-based-recipe">Video Based Recipe</label>
-                <br/>
-                <label for="radio-yes">
-                    <input class="radio-btn" id="radio-yes" type="radio" name="video-recipe" value="yes" @if ($recipe->video_recipe === 'yes') checked @endif/><span class="radio-text">yes</span>
-                </label>
-                <label for="radio-no">
-                    <input class="radio-btn" id="radio-no" type="radio" name="video-recipe" value="no" @if ($recipe->video_recipe === 'no') checked @endif /> <span class="radio-text">no</span>
-                </label>
-                <br/>
-                <br/>
-                <div id="video-embed-code-container" @if ($recipe->video_recipe === 'yes') style="display: block;" @else style="display: none;" @endif>
+<br />
+<label for="radio-yes">
+    <input class="radio-btn" id="radio-yes" type="radio" name="video-recipe" value="yes" @if ($recipe->video_recipe === 'yes') checked @endif />
+    <span class="radio-text">yes</span>
+</label>
+<label for="radio-no">
+    <input class="radio-btn" id="radio-no" type="radio" name="video-recipe" value="no" @if ($recipe->video_recipe === 'no') checked @endif />
+    <span class="radio-text">no</span>
+</label>
+<br />
+<br />
 
-                <label for="video-embed">Video Url</label>
-                <p>Please provide either the url of your video or upload the video file. If you choose to upload a video, make sure it's in a supported format (e.g., MP4).</p>
-                <textarea class="short-text" name="embed-code" id="video-embed" cols="30" rows="10">{{ $recipe->video_embed_code }}</textarea>
-                <label for="video-upload">Upload Video</label>
-                <input type="file" name="video-upload" id="video-upload">
-                {{-- Display the existing video URL if it's not empty --}}
+<div id="video-embed-code-container" @if ($recipe->video_recipe === 'yes') style="display: block;" @else style="display: none;" @endif>
+    <label for="embed-code">Video URL</label>
+    <p>Please provide either the URL of your video or upload the video file. If you choose to upload a video, make sure it's in a supported format (e.g., MP4). If you choose to provide a video URL, the uploaded video will be ignored.</p>
+    <textarea class="short-text" name="embed-code" id="video-embed" cols="30" rows="10">@if ($recipe->video_recipe === 'yes') {{ $recipe->video_embed_code }} @endif</textarea>
+    <label for="video-upload">Upload Video</label>
+    <input type="file" name="video-upload" id="video-upload">
+    {{-- Display the existing video URL if it's not empty --}}
     @if (!empty($recipe->video_path))
-    <div class="existing-video">
-        <label>Existing Video:</label>
-        <a href="{{ asset('storage/' . $recipe->video_path) }}" target="_blank">{{ asset('storage/' . $recipe->video_path) }}</a>
-    </div>
+        <div class="existing-video">
+            <label>Existing Video:</label>
+            <p>{{ asset('storage/' . $recipe->video_path) }}</p>
+        </div>
     @endif
-                </div>
+</div>
 
                 <div class="row">
-                    <div class="col-sm-6">
-                        <label for="yield">Yield</label>
-                        <input type="text" name="yield" value="{{ $recipe->yield }}" id="yield"/>
-                    </div>
+                
                     <div class="col-sm-6">
                         <label for="servings">Servings</label>
                         <input type="text" name="servings" value="{{ $recipe->servings }}" id="servings"/>
@@ -6878,45 +6873,36 @@ div.widget-measurements .default-btn {
                 <input type="text" name="tags" value="{{ $recipe->tags }}" id="tags"/>
 
                 <div class="row">
-                    <div class="col-sm-6">
-                        <label for="recipe-type">Recipe Type</label>
-                        <select name="recipe-type" id="recipe-type" value="{{ $recipe->recipe_type }}" class="advance-selectable">
-                            <option selected="selected">None</option>
-                            <option>Breakfast</option>
-                            <option>Lunch</option>
-                            <option>Dinner</option>
-                            <option>Dessert</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="cuisine-select">Cuisine</label>
-                        <select name="cuisine" id="cuisine-select" value="{{ $recipe->cuisine }}" class="advance-selectable">
-                            <option selected="selected">None</option>
-                            <option>Indian</option>
-                            <option>Chinese</option>
-                            <option>Italian</option>
-                            <option>European</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="course-select">Course</label>
-                        <select name="course" id="course-select" value="{{ $recipe->course }}" class="advance-selectable">
-                            <option selected="selected">None</option>
-                            <option>Soup</option>
-                            <option>Salad</option>
-                            <option>Entree</option>
-                            <option>Dessert</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="skill">Skill Level</label>
-                        <select name="skill" id="skill" value="{{ $recipe->skill }}" class="advance-selectable">
-                            <option selected="selected">None</option>
-                            <option>Easy</option>
-                            <option>Medium</option>
-                            <option>Professional</option>
-                        </select>
-                    </div>
+                <div class="col-sm-6">
+    <label for="recipe-type">Recipe Type</label>
+    <select name="recipe-type" id="recipe-type" class="advance-selectable">
+        <option value="None" @if ($recipe->recipe_type === 'None') selected @endif>None</option>
+        <option value="Breakfast" @if ($recipe->recipe_type === 'Breakfast') selected @endif>Breakfast</option>
+        <option value="Lunch" @if ($recipe->recipe_type === 'Lunch') selected @endif>Lunch</option>
+        <option value="Dinner" @if ($recipe->recipe_type === 'Dinner') selected @endif>Dinner</option>
+        <option value="Dessert" @if ($recipe->recipe_type === 'Dessert') selected @endif>Dessert</option>
+    </select>
+</div>
+<div class="col-sm-6">
+    <label for="cuisine-select">Cuisine</label>
+    <select name="cuisine" id="cuisine-select" class="advance-selectable">
+        <option value="None" @if ($recipe->cuisine === 'None') selected @endif>None</option>
+        <option value="Indian" @if ($recipe->cuisine === 'Indian') selected @endif>Indian</option>
+        <option value="Chinese" @if ($recipe->cuisine === 'Chinese') selected @endif>Chinese</option>
+        <option value="Italian" @if ($recipe->cuisine === 'Italian') selected @endif>Italian</option>
+        <option value="European" @if ($recipe->cuisine === 'European') selected @endif>European</option>
+    </select>
+</div>
+                   
+<div class="col-sm-6">
+    <label for="skill">Skill Level</label>
+    <select name="skill" id="skill" class="advance-selectable">
+        <option value="None" @if ($recipe->skill === 'None') selected @endif>None</option>
+        <option value="Easy" @if ($recipe->skill === 'Easy') selected @endif>Easy</option>
+        <option value="Medium" @if ($recipe->skill === 'Medium') selected @endif>Medium</option>
+        <option value="Professional" @if ($recipe->skill === 'Professional') selected @endif>Professional</option>
+    </select>
+</div>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="recipe-submit-btn">Update Your Recipe</button>
@@ -7092,28 +7078,23 @@ div.widget-measurements .default-btn {
     });
 </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#delete-image-button').click(function() {
-            if (confirm('Are you sure you want to delete this image?')) {
-                $.ajax({
-                    url: "{{ route('delete-image', ['id' => $recipe->id]) }}",
-                    type: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        // Handle success (e.g., hide the image or refresh the page)
-                    },
-                    error: function(error) {
-                        // Handle error (e.g., show an error message)
-                    }
-                });
-            }
-        });
+    document.getElementById('upload-image').addEventListener('change', function() {
+        const fileInput = this;
+        const imagePreview = document.getElementById('image-preview');
+
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
     });
 </script>
+
 
 </body>
 </html>

@@ -44,6 +44,9 @@
 /*--------------------*/
 /* mixins
 /*--------------------*/
+.required {
+  color: red;
+}
 .placeholder-lora ::-webkit-input-placeholder {
   font-family: 'Lora', serif;
 }

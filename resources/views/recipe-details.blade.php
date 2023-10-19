@@ -6615,6 +6615,10 @@ div.widget-measurements .default-btn {
     border-bottom: 1px solid #c9d6bf;
   }
 }
+.responsive-image {
+    max-width: 100%;
+    height: auto; /* This ensures the image maintains its aspect ratio */
+}
 
 </style>
     <meta charset="utf-8">
@@ -6735,6 +6739,11 @@ div.widget-measurements .default-btn {
         <div class="main-heading">
             <h1>Recipe details page</h1>
         </div>
+        @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
     </div>
 </div>
@@ -6744,21 +6753,38 @@ div.widget-measurements .default-btn {
 <div class="wrapper-head-chef">
     <div class=head-chef>
         <div class="left-side">
-            <a href="#"><img src="{{ asset('storage/' . $recipe->image) }}" alt="Recipe Image"/></a>
+            <a href="#"><img class="responsive-image" src="{{ asset('storage/' . $recipe->image) }}" alt="Recipe Image"/></a>
         </div>
         <div class="right-side">
             <h3><a href="#">{{ $recipe->title }}</a></h3>
-            
+             <!-- Recipe Ratings -->
+    <div class="recipe-ratings">
+        <p>Rate this recipe:</p>
+        <div class="rating-stars">
+            <!-- Add your rating stars UI elements here -->
+            <!-- Users can click on stars to rate the recipe -->
+        </div>
+    </div>
             <div class="separator-chef"></div>
             <p>
             {{ $recipe->short_description }}
             </p>
+            @if (!empty($recipe->yield))
+        <p>Yield: {{ $recipe->yield }}</p>
+    @endif
+    @if (!empty($recipe->servings))
+        <p>Servings: {{ $recipe->servings }}</p>
+    @endif
+    @if (!empty($recipe->prep_time))
+        <p>Prep-time: {{ $recipe->prep_time }}</p>
+    @endif
+    @if (!empty($recipe->cook_time))
+        <p>Cook-time: {{ $recipe->cook_time }}</p>
+    @endif
+    @if (!empty($recipe->ready_in))
+        <p>Ready-in: {{ $recipe->ready_in }}</p>
+    @endif
             <br/>
-            @if ($recipe->video_recipe === 'yes' && !empty($recipe->video_embed_code))
-    <div class="recipe-video">
-        <a href="{{ $recipe->video_embed_code }}" target="_blank" class="btn btn-primary">Watch Video</a>
-    </div>
-@endif
         </div>
     </div>
 </div>
@@ -6767,11 +6793,13 @@ div.widget-measurements .default-btn {
     <a href="{{ route('generate-pdf', ['id' => $recipe->id]) }}" class="print-button"><i class="fa fa-download"></i> Download Recipe</a>
                     <ul class="pre-tags">
                         <li><span>Cuisine : </span> {{ $recipe->cuisine }}</li>
-                        <li><span>Course : </span> {{ $recipe->course }}</li>
+                        <li><span>Recipe Type : </span> {{ $recipe->recipe_type }}</li>
                         <li><span>Skill Level : </span> {{ $recipe->skill }}</li>
                     </ul>
-                    @if ($recipe->video_recipe === 'yes' && !empty($recipe->video_path))
-                <a class="button-default theme-filled video-button" href="{{ asset($recipe->video_path) }}">Watch Video</a>
+                    @if (!empty($recipe->video_path))
+                <a class="button-default theme-filled video-button" href="{{ asset('storage/' . $recipe->video_path) }}" target="_blank">Watch Video</a>
+                @elseif ($recipe->video_recipe === 'yes' && !empty($recipe->video_embed_code))
+                <a class="button-default theme-filled video-button" href="{{ $recipe->video_embed_code }}" target="_blank">Watch Video</a>
             @endif
                     <div class="separator-post"></div>
                     <p>
@@ -6831,8 +6859,80 @@ div.widget-measurements .default-btn {
                     </div>
                     </div>
                     
+                    <div class="recipe-comments">
+                        <h3 class="lined">Review ({{ $recipe->comments->count() }})</h3>
+                        <ul>
+                        @foreach ($recipe->comments as $comment)
+                            <li>
+                                <div class="comment">
+                                    <h5>{{ $comment->name }}</h5>
+                                    <span class="time">{{ $comment->created_at->diffForHumans() }}</span>
+                                    <p>
+                                    {{ $comment->comment }}
+                                    </p>
+                                    <a href="#" class="reply-button">Reply</a>
+
+                                    @if ($comment->replies->count() > 0)
+                    <ul class="replies">
+                        @foreach ($comment->replies as $reply)
+                            <li>
+                                <div class="comment">
+                                    <h5>{{ $reply->name }}</h5>
+                                    <span class="time">{{ $reply->created_at->diffForHumans() }}</span>
+                                    <p>{{ $reply->reply }}</p>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+
+                            <!-- Reply form for this comment -->
+                <div class="reply-form" style="display: none;">
+                    <!-- Add a form or textarea for users to enter their reply -->
+                    <form action="{{ route('replies.store') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" name="name" placeholder="Name" required/>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" name="email" placeholder="Email" required/>
+                            </div>
+                        </div>
+                        <textarea name="reply" id="comment" cols="30" rows="3" placeholder="Reply" required></textarea>
+                        <button class="submit-reply">Submit Reply</button>
+                    </form>
+                </div>
+            </li>
+        @endforeach
+    </ul>
 </div>
+
+                    <div class="comment-form">
+                        <h3 class="lined">Leave Review</h3>
+                        
+                        <form action="{{ route('comments.store', ['recipe' => $recipe->id]) }}" method="post">
+                          @csrf
+                          <input type="hidden" name="recipe_id" value="{{ $recipe->id }}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" name="name" placeholder="Name" required/>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" name="email" placeholder="Email" required/>
+                                </div>
+                                 
+                            </div>
+                            <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Message" required></textarea>
+                            <button class="submit-comment">Submit</button>
+                        </form>
+                    </div>
+
+                    </div>
+                </div>
 </section>
+</div>
 
 <!--footer-->
 <div class="footer footer-variant-one footer-fluid">
@@ -6892,7 +6992,6 @@ div.widget-measurements .default-btn {
     </div>
 </div>
 <!--footer ends-->
-
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script src="js/flexslider/jquery.flexslider-min.js"></script>
@@ -6913,6 +7012,18 @@ div.widget-measurements .default-btn {
 <script src="/js/easyResponsiveTabs.js"></script>
 <script src="/js/owl.carousel.js"></script>
 <script src="/js/custom.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // When a "Reply" link with class "reply-button" is clicked
+        $(".reply-button").click(function(e) {
+            e.preventDefault(); // Prevent the default link behavior
+
+            // Toggle the visibility of the closest "reply-form" element
+            $(this).closest(".comment").find(".reply-form").toggle();
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -223,7 +223,7 @@
 <div class="recipe-listing listing-list">
 
 @foreach ($recipes as $recipe)
-@if ($recipe->user_id !== auth()->user()->id)
+
 <div class="listing">
     <div class="image">
     <a href="{{ route('recipe.details', ['id' => $recipe->id]) }}">
@@ -232,60 +232,12 @@
     </div>
     <div class="detail">
         <h4><a href="{{ route('recipe.details', ['id' => $recipe->id]) }}">{{ $recipe->title }}</a></h4>
-        <p>
-        {{ $recipe->short_description }}
-        </p>
+        <p>{{ $recipe->short_description }}</p>
         <div class="meta-listing">
-            <!--<ul class="post-meta">
-                <li class="author"><a href="#">{{ auth()->user()->name }}</a></li>
+            <ul class="post-meta">
+            <li class="author"><a href="#">{{ App\Models\User::find($recipe->user_id)->username }}</a></li>
                 <li class="calendar">{{ $recipe->created_at->format('d/m/Y') }}</li>
-            </ul>-->
-           <!-- @for ($i = 1; $i <= 5; $i++)
-            @if ($i <= $recipe->ratings->avg('rating'))
-                            <svg class="icon-container" width="25" height="19" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 19">-->
-                                <!-- ... Include your SVG path for a filled star icon ... -->
-                           <!-- </svg>
-                        @else
-                            <svg class="icon-container" width="25" height="19" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 19">-->
-                                <!-- ... Include your SVG path for an empty star icon ... -->
-                            <!--</svg>
-                        @endif
-                    @endfor
-                </span>
-                <span class="rating-figure">({{ number_format($recipe->ratings->avg('rating'), 1) }}/5)</span>
-        
-                <div class="rating-input">
-                <form class="rating-form" method="post" action="{{ route('recipes.rate', ['recipe' => $recipe->id]) }}">
-                 @csrf-->
-                <!-- Hidden input field to store the recipe's ID -->
-                <!--<input type="hidden" class="recipe-id" value="{{ $recipe->id }}">-->
-
-                <!-- Radio buttons for rating -->
-                <!--<label>
-                    <input type="radio" name="rating" value="1">
-                    <span class="star">&#9733;</span>
-                </label>
-                <label>
-                    <input type="radio" name="rating" value="2">
-                    <span class="star">&#9733;</span>
-                </label>
-                <label>
-                    <input type="radio" name="rating" value="3">
-                    <span class="star">&#9733;</span>
-                </label>
-                <label>
-                    <input type="radio" name="rating" value="4">
-                    <span class="star">&#9733;</span>
-                </label>
-                <label>
-                    <input type="radio" name="rating" value="5">
-                    <span class="star">&#9733;</span>
-                </label>
-
-                <button type="submit">Submit Rating</button>
-            </form>
-        </div>-->
-            
+            </ul>    
         @if ($recipe->video_recipe === 'yes' && !empty($recipe->video_embed_code))
     <div class="recipe-video">
         <a href="{{ $recipe->video_embed_code }}" target="_blank" class="btn btn-primary">Watch Video</a>
@@ -295,16 +247,29 @@
             <!-- Other meta details here... -->
     </div>
 </div> 
-@endif
+
 @endforeach
 
 
 <!--comment-->
 <ul class="page-nav">
-    <li class="current"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
+    @if ($recipes->lastPage() > 1)
+        @if ($recipes->currentPage() != 1)
+            <li><a href="{{ $recipes->url($recipes->currentPage() - 1) }}">&laquo;</a></li>
+        @endif
+
+        @for ($i = max($recipes->currentPage() - 2, 1); $i <= min($recipes->currentPage() + 2, $recipes->lastPage()); $i++)
+            <li class="{{ $recipes->currentPage() == $i ? 'current' : '' }}">
+                <a href="{{ $recipes->url($i) }}">{{ $i }}</a>
+            </li>
+        @endfor
+
+        @if ($recipes->currentPage() != $recipes->lastPage())
+            <li><a href="{{ $recipes->url($recipes->currentPage() + 1) }}">&raquo;</a></li>
+        @endif
+    @endif
 </ul>
+
 </div>
 </div>
 </div>
@@ -474,59 +439,7 @@
     </a>
 </div>
 <!--latest news widget-->
-<div class="widget latest-news-widget">
-    <h2>Latest News</h2>
-    <ul>
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="images/temp-images/widget-thumbnail.jpg" alt="thumbnail"/>
-                </a>
-            </div>
-            <div class="detail">
-                <a href="#">Pimento Cheese Potato Skins</a>
-                <span class="post-date">March 21,2015</span>
-            </div>
-        </li>
 
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="images/temp-images/widget-thumbnail.jpg" alt="thumbnail"/>
-                </a>
-            </div>
-            <div class="detail">
-                <a href="#">Pimento Cheese Potato Skins</a>
-                <span class="post-date">March 21,2015</span>
-            </div>
-        </li>
-
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="images/temp-images/widget-thumbnail.jpg" alt="thumbnail"/>
-                </a>
-            </div>
-            <div class="detail">
-                <a href="#">Pimento Cheese Potato Skins</a>
-                <span class="post-date">March 21,2015</span>
-            </div>
-        </li>
-
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="images/temp-images/widget-thumbnail.jpg" alt="thumbnail"/>
-                </a>
-            </div>
-            <div class="detail">
-                <a href="#">Pimento Cheese Potato Skins</a>
-                <span class="post-date">March 21,2015</span>
-            </div>
-        </li>
-
-    </ul>
-</div>
 <!--latest news widget ends-->
 <!--get social-->
 <div class="widget widget-get-social">
