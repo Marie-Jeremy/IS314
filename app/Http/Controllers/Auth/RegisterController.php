@@ -53,8 +53,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'recipe_type' => 'array',
-            'cuisine' => 'array',
+            'recipe_type' => ['array'],
+            'cuisine' => ['array'],
         ]);
     }
 
@@ -67,13 +67,17 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         dd($data); 
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'phone_number' => $data['phone_number'],
-            'recipe_type' => json_encode($data['recipe_type']),
-            'cuisine' => json_encode($data['cuisine']),
         ]);
+    
+        // Attach the selected recipe types and cuisines to the user
+        $user->recipeTypes()->attach($data['recipe_type']);
+        $user->cuisines()->attach($data['cuisine']);
+    
+        return $user;
     }
 }

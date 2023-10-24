@@ -6920,7 +6920,7 @@ div.widget-measurements .default-btn {
                                     <input type="text" name="name" placeholder="Name" required/>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="email" name="email" placeholder="Email" required/>
+                                    <input type="email" name="email" placeholder="Email" required value="{{ auth()->user()->email }}" readonly/>
                                 </div>
                                  
                             </div>

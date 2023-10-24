@@ -35,8 +35,9 @@ class UserController extends Controller
     $user->gender = $request->input('gender');
     $user->role_as =  '0';
 
-    $user->recipe_type = is_array($request->input('recipe_type')) ? implode(',', $request->input('recipe_type')) : $request->input('recipe_type');
-    $user->cuisine = is_array($request->input('cuisine')) ? implode(',', $request->input('cuisine')) : $request->input('cuisine');
+    $user->recipe_type = json_encode($request->input('recipe_type'));
+    $user->cuisine = json_encode($request->input('cuisine'));
+    
     
     $user->save();
 

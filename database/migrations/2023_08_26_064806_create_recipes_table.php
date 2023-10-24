@@ -25,7 +25,7 @@ class CreateRecipesTable extends Migration
             $table->boolean('video_recipe')->default(false);
             $table->text('video_embed_code')->nullable();
             $table->string('yield')->nullable();
-            $table->integer('servings')->nullable();
+            $table->string('servings')->nullable();
             $table->string('prep_time')->nullable();
             $table->string('cook_time')->nullable();
             $table->string('ready_in')->nullable();

@@ -119,7 +119,9 @@ if ($request->hasFile('video-upload')) {
     $user = auth()->user();
 
     if ($user) {
-        $recipes = Recipe::where('user_id', $user->id)->get();
+        $recipes = Recipe::where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
         foreach ($recipes as $recipe) {
             $recipe->steps = json_decode($recipe->steps, true);
         }
@@ -134,26 +136,44 @@ if ($request->hasFile('video-upload')) {
 public function userHome()
 {
     $user = auth()->user();
+    $cuisines = [];
+    $recipeTypes = [];
 
     if ($user) {
         // Get the user's selected recipe type and cuisine preferences
-        $recipeTypes = json_decode($user->recipe_type);
-        $cuisines = json_decode($user->cuisine);
-
+        $cuisines = is_array($user->cuisine) ? $user->cuisine : [$user->cuisine];
+        $recipeTypes = !empty($user->recipe_type) ? explode(',', $user->recipe_type) : [];
         // Query recipes based on user preferences
         $query = Recipe::query();
 
-        if (!empty($recipeTypes)) {
-            $query->whereIn('recipe_type', $recipeTypes);
-        }
-
-        if (!empty($cuisines)) {
+        if (!empty($cuisines) && !empty($recipeTypes)) {
             $query->whereIn('cuisine', $cuisines);
+        }
+        if (!empty($recipeTypes)) {
+            // If there are multiple recipe types, use 'orWhere' to include any of them
+            $query->where(function ($q) use ($recipeTypes) {
+                foreach ($recipeTypes as $type) {
+                    $q->orWhere('recipe_type', $type);
+                }
+            });
         }
 
         $recipes = $query->orderBy('created_at', 'desc')->paginate(5);
 
-        return view('user_home', ['recipes' => $recipes, 'recipeTypes' => $recipeTypes, 'cuisines' => $cuisines]);
+        if ($recipes->isEmpty()) {
+            // If no personalized recipes found, fetch all recipes
+            $allRecipes = Recipe::orderBy('created_at', 'desc')->paginate(5);
+
+            return view('user_home', [
+                'recipes' => $allRecipes,
+            ]);
+        }
+
+        return view('user_home', [
+            'recipes' => $recipes,
+            'cuisine' => $cuisines, // Pass the $cuisines variable to the view
+            'recipeTypes' => $recipeTypes, // Pass the $recipeTypes variable to the view
+        ]);
     }
 
     // Handle the case where the user is not authenticated
@@ -275,22 +295,16 @@ public function showRecipeDetails($id)
     return view('recipe-details', ['recipe' => $recipe]);
 }
 
-public function generatePDF($id)
+public function generatePDF($recipe)
 {
-    $recipe = Recipe::find($id);
+    $recipe = Recipe::findOrFail($recipe);
 
-    if (!$recipe) {
-        abort(404);
-    }
+    $imagePath = storage_path('app/public/' . $recipe->image);
+    $imageUrl = asset('storage/' . $recipe->image);
 
-    // Generate the HTML content for the PDF using a Blade view
-    $pdf = PDF::loadView('pdf', ['recipe' => $recipe]);
+    $pdf = PDF::loadView('pdf', compact('recipe', 'imagePath', 'imageUrl'));
 
-    // Generate a unique filename for the PDF
-    $filename = Str::slug($recipe->title) . '.pdf';
-
-    // Return a response with a link to download the PDF
-    return $pdf->download($filename);
+    return $pdf->stream('recipe.pdf');
 }
 
 public function deleteImage(Request $request, $id)
@@ -316,4 +330,49 @@ public function deleteImage(Request $request, $id)
     return redirect()->back()->with('error', 'You do not have permission to delete this image.');
 }
 
+public function search(Request $request)
+{
+    // Retrieve the search criteria from the form
+    $ingredient = $request->input('ingredient');
+    // Retrieve other criteria as needed
+
+    // Perform the search using Eloquent
+    $recipes = Recipe::where('ingredient', $ingredient)
+        // Add more conditions for other criteria
+        ->get();
+
+    return view('search_results', ['recipes' => $recipes]);
+}
+
+public function showBreakfastRecipes()
+    {
+        // Fetch breakfast recipes
+        $breakfastRecipes = Recipe::where('recipe_type', 'breakfast')->get();
+
+        return view('breakfast', compact('breakfastRecipes'));
+    }
+
+    public function showLunchRecipes()
+    {
+        // Fetch breakfast recipes
+        $lunchRecipes = Recipe::where('recipe_type', 'lunch')->get();
+
+        return view('lunch', compact('lunchRecipes'));
+    }
+
+    public function showDinnerRecipes()
+    {
+        // Fetch breakfast recipes
+        $dinnerRecipes = Recipe::where('recipe_type', 'dinner')->get();
+
+        return view('dinner', compact('dinnerRecipes'));
+    }
+
+    public function showDessertRecipes()
+    {
+        // Fetch breakfast recipes
+        $dessertRecipes = Recipe::where('recipe_type', 'dessert')->get();
+
+        return view('dessert', compact('dessertRecipes'));
+    }
 }

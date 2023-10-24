@@ -123,158 +123,70 @@
     </div>
 </div>
 
-<div class="advance-search">
-    <!--advance search form-->
-
-    <div class="container">
-        <div class="wrapper-search">
-            <div class="container-tags">
-            <span class="tag">
-                <span class="tag-inner">Find Recipes <i class="fa fa-angle-down"></i></span>
-            </span>
-
-            </div>
-            <div class="outer-advance-search">
-
-            <form action="#" method="get" id="advance-search">
-                    <fieldset>
-                        <div class="inner-advance-search">
-
-                            <div class="form-field">
-                                <label for="ingredient">ingredient</label>
-                                <select name="ingredient" id="ingredient" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Ingredient</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <div class="form-field">
-                                <label for="course">course</label>
-                                <select name="course" id="course" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Course</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <div class="form-field">
-                                <label for="cuisine">cuisine</label>
-                                <select name="cuisine" id="cuisine" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Cuisine</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <div class="form-field">
-                                <label for="time">Cooking Time</label>
-                                <select name="time" id="time" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Cooking Time</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <div class="form-field">
-                                <label for="calories">calories</label>
-                                <select name="calories" id="calories" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Calories</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <button type="submit"><i class="fa fa-search"></i></button>
-
-                        </div>
-                    </fieldset>
-
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!--advance search form ends-->
-</div>
-
-<!--banner ends-->
 <div class="recipes-home-body inner-page">
-<div class="container">
-<div class="row">
-<div class="col-md-8 col-lg-9">
-<div class="recipe-set">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-lg-9">
+                <div class="recipe-set">
 
-<h2>Recent Recipes</h2>
+                    <h2> Recipe Listing for {{ $category }}</h2>
 
-<div class="recipe-listing listing-list">
-@if (count($recipes) > 0)
-@foreach ($recipes as $recipe)
+                    <div class="recipe-listing listing-list">
 
-<div class="listing">
-    <div class="image">
-    <a href="{{ route('recipe.details', ['id' => $recipe->id]) }}">
-            <img src="{{ asset('storage/' . $recipe->image) }}" alt="image"/>
-        </a>
-    </div>
-    <div class="detail">
-        <h4><a href="{{ route('recipe.details', ['id' => $recipe->id]) }}">{{ $recipe->title }}</a></h4>
-        <p>{{ $recipe->short_description }}</p>
-        <div class="meta-listing">
-            <ul class="post-meta">
-            <li class="author"><a href="#">{{ App\Models\User::find($recipe->user_id)->username }}</a></li>
-                <li class="calendar">{{ $recipe->created_at->format('d/m/Y') }}</li>
-                <li class="cuisine">Cuisine: {{ $recipe->cuisine }} </li>
-                <li class="recipe-type">Recipe Type: {{ $recipe->recipe_type }} </li>
-            </ul>    
-        @if ($recipe->video_recipe === 'yes' && !empty($recipe->video_embed_code))
-    <div class="recipe-video">
-        <a href="{{ $recipe->video_embed_code }}" target="_blank" class="btn btn-primary">Watch Video</a>
-    </div>
-@endif
-            </div>
-            <!-- Other meta details here... -->
-    </div>
-</div> 
+                        @if ($results->count() > 0)
+                            @foreach ($results as $recipe)
+                                <div class="listing">
+                                    <div class="image">
+                                        <a href="{{ route('recipe.details', ['id' => $recipe->id]) }}">
+                                        <img src="{{ asset('storage/' . $recipe->image) }}" alt="image"/>
+                                        </a>
+                                    </div>
+                                    <div class="detail">
+                                        <h4><a href="{{ route('recipe.details', ['id' => $recipe->id]) }}">{{ $recipe->title }}</a></h4>
+                                        <p>{{ $recipe->short_description }}</p>
+                                        <div class="meta-listing">
+                                            <ul class="post-meta">
+                                                <li class="author"><a href="#">{{ App\Models\User::find($recipe->user_id)->username }}</a></li>
+                                                <li class="calendar">{{ $recipe->created_at->format('d/m/Y') }}</li>
+                                            </ul>
+                                            @if ($recipe->video_recipe === 'yes' && !empty($recipe->video_embed_code))
+                                                <div class="recipe-video">
+                                                    <a href="{{ $recipe->video_embed_code }}" target="_blank" class="btn btn-primary">Watch Video</a>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <!-- Other meta details here... -->
+                                    </div>
+                                </div>
+                            @endforeach
 
-@endforeach
-
-@else
-        <p>No personalized recipes available.</p>
-    @endif
-<!--comment-->
-<ul class="page-nav">
-    @if ($recipes->lastPage() > 1)
-        @if ($recipes->currentPage() != 1)
-            <li><a href="{{ $recipes->url($recipes->currentPage() - 1) }}">&laquo;</a></li>
+                            <ul class="page-nav">
+    @if ($results->lastPage() > 1)
+        @if ($results->currentPage() != 1)
+            <li><a href="{{ $results->url($results->currentPage() - 1) }}">&laquo;</a></li>
         @endif
 
-        @for ($i = max($recipes->currentPage() - 2, 1); $i <= min($recipes->currentPage() + 2, $recipes->lastPage()); $i++)
-            <li class="{{ $recipes->currentPage() == $i ? 'current' : '' }}">
-                <a href="{{ $recipes->url($i) }}">{{ $i }}</a>
+        @for ($i = max($results->currentPage() - 2, 1); $i <= min($results->currentPage() + 2, $results->lastPage()); $i++)
+            <li class="{{ $results->currentPage() == $i ? 'current' : '' }}">
+                <a href="{{ $results->url($i) }}">{{ $i }}</a>
             </li>
         @endfor
 
-        @if ($recipes->currentPage() != $recipes->lastPage())
-            <li><a href="{{ $recipes->url($recipes->currentPage() + 1) }}">&raquo;</a></li>
+        @if ($results->currentPage() != $results->lastPage())
+            <li><a href="{{ $results->url($results->currentPage() + 1) }}">&raquo;</a></li>
         @endif
     @endif
 </ul>
 
-</div>
-</div>
-</div>
-<div class="col-md-4 col-lg-3">
+                        @else
+                            <p>No results found.</p>
+                        @endif
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
 <aside>
 <div class="side-bar">
 <!--recipes search widget-->
@@ -361,204 +273,15 @@
     </div>
 </div>
 <!--recipes search widget ends-->
-
-<!--popular recipes widget-->
-<div class="widget latest-news-widget">
-    <h2>popular recipes</h2>
-    <ul>
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="images/temp-images/widget-thumbnail.jpg" alt="thumbnail"/>
-                </a>
-            </div>
-            <div class="detail">
-                <a href="#">Pimento Cheese Potato Skins</a>
-                <span class="post-date">March 21,2015</span>
-            </div>
-        </li>
-
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="images/temp-images/widget-thumbnail.jpg" alt="thumbnail"/>
-                </a>
-            </div>
-            <div class="detail">
-                <a href="#">Pimento Cheese Potato Skins</a>
-                <span class="post-date">March 21,2015</span>
-            </div>
-        </li>
-
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="images/temp-images/widget-thumbnail.jpg" alt="thumbnail"/>
-                </a>
-            </div>
-            <div class="detail">
-                <a href="#">Pimento Cheese Potato Skins</a>
-                <span class="post-date">March 21,2015</span>
-            </div>
-        </li>
-
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="images/temp-images/widget-thumbnail.jpg" alt="thumbnail"/>
-                </a>
-            </div>
-            <div class="detail">
-                <a href="#">Pimento Cheese Potato Skins</a>
-                <span class="post-date">March 21,2015</span>
-            </div>
-        </li>
-
-    </ul>
-</div>
-<!--popular recipes widget ends-->
-<div class="widget">
-    <a href="#">
-        <img src="images/temp-images/add-side.jpg" alt="Add"/>
-    </a>
-</div>
-<!--latest news widget-->
-
-<!--latest news widget ends-->
-<!--get social-->
-<div class="widget widget-get-social">
-    <h2>get social</h2>
-    <ul>
-        <li class="facebook">
-            <a href="#">
-                <i class="fa fa-facebook"></i>
-                <span class="count">23.5K</span>
-                <span class="count-type">Likes</span>
-            </a>
-        </li>
-        <li class="twitter">
-            <a href="#">
-                <i class="fa fa-twitter"></i>
-                <span class="count">23.5K</span>
-                <span class="count-type">Likes</span>
-            </a>
-        </li>
-        <li class="google-plus">
-            <a href="#">
-                <i class="fa fa-google-plus"></i>
-                <span class="count">23.5K</span>
-                <span class="count-type">Likes</span>
-            </a>
-        </li>
-
-    </ul>
-</div>
-<!--get social ends-->
-</div>
-</aside>
-</div>
-</div>
-
-</div>
-</div>
-
-<!--footer-->
-<div class="footer footer-variant-one footer-fluid">
-    <div class="container">
-        <div class="footer-inner">
-            <div class="text-center">
-                <a class="logo-footer wow animated zoomIn" href="index.html"><img src="" alt=""/></a>
-                <p class="wow animated flipInX">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                    <br/>
-                    magna aliquyam erat, with an extra ordinary design and quality development features in low
-                </p>
-
-            </div>
-
-            <div class="subs-social-options">
-                <div class="row custom-row-footer">
-                    <div class="col-md-6 custom-col-options">
-                        <div class="left-side">
-                            <div class="widget widget-footer news-letter-signup wow animated flipInY">
-                                <h2>Newsletter Signup</h2>
-
-                                <form class="subs-form" action="#" method="post">
-                                    <div class="email-field">
-                                        <input type="email" name="email" placeholder="Enter you email address"/>
-                                        <button><i class="fa fa-paper-plane-o"></i></button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="right-side">
-                            <div class="widget widget-footer social-icons">
-                                <h2 class="wow animated fadeInRight">Get Social with Us</h2>
-                                <ul>
-                                    <li class="wow animated bounceInRight"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li class="wow animated bounceInRight animation-delay100ms"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li class="wow animated bounceInRight animation-delay200ms" ><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li class="wow animated bounceInRight animation-delay300ms"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    <li class="wow animated bounceInRight animation-delay400ms" ><a href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                    <li class="wow animated bounceInRight animation-delay500ms"><a href="#"><i class="fa fa-flickr"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-copyright text-center">
-                <p>&copy; Copyright 2015 All Rights Reserved by <a href="#">Majestic Themes</a></p>
-            </div>
-            <div class="corner-image wow animated fadeInRight">
-                <img src="images/footer-corner-image.jpg" alt="image"/>
-            </div>
         </div>
     </div>
 </div>
-<!--footer ends-->
 
-<script src="js/jquery-1.11.3.min.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/jquery.meanmenu.js"></script>
-<script src="js/jquery.selectric.min.js"></script>
-<script src="js/wow.js"></script>
-<script src="js/jquery.form.js"></script>
-<script src="js/jquery.validate.min.js"></script>
-<script src="js/jquery.swipebox.js"></script>
-<script src="js/custom.js"></script>
-<!-- JavaScript/jQuery for handling the AJAX request -->
 <script>
     function searchCategory(category) {
         // Redirect to the search results page with the selected category
         window.location.href = '/search?category=' + category;
     }
 </script>
-
-<script>
-    // Add JavaScript to handle form submission
-    const ratingForms = document.querySelectorAll('.rating-form');
-    ratingForms.forEach(form => {
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const formData = new FormData(form);
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: formData,
-            });
-
-            // Handle the response as needed
-        });
-    });
-</script>
-
-
-
-
 </body>
 </html>

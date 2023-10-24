@@ -65,16 +65,16 @@
                         </li>
                         
                         <li>
-                            <a href="/policy">Breakfast</a>
+                            <a href="/breakfast">Breakfast</a>
                         </li>
                         <li>
-                            <a href="/contact">Lunch</a>
+                            <a href="/lunch">Lunch</a>
                         </li>
                         <li>
-                            <a href="/contact">Dinner</a>
+                            <a href="/dinner">Dinner</a>
                         </li>
                         <li>
-                            <a href="/contact">Dessert</a>
+                            <a href="/dessert">Dessert</a>
                         </li>
                         <li>
                             <a href="/register">Register</a>

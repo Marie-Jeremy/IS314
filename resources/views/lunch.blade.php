@@ -135,10 +135,10 @@
         <div class="row">
             <div class="col-md-8 col-lg-9">
                 <div class="recipe-set">
-                <h2>Dinner Recipes</h2>
+                <h2>Lunch Recipes</h2>
                 <div class="recipe-listing listing-list">
-            @if (count($dinnerRecipes) > 0)
-                @foreach ($dinnerRecipes as $recipe)
+            @if (count($lunchRecipes) > 0)
+                @foreach ($lunchRecipes as $recipe)
                 <div class="listing">
                                     <div class="image">
                                         <a href="/login">
