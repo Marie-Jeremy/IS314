@@ -86,7 +86,14 @@
                         Food<span>Recipe</span>
                     </a>
                     @if(auth()->check())
-                        <p><span class="user-name"><b>{{ auth()->user()->name }}</b></span></p>
+                    <div style="float: right;">
+                        <p><span class="user-name"><b>{{ auth()->user()->username }}</b></span></p>                        
+                        <form class="form-inline my-2 my-lg-0" type="get" action="{{ url('/search') }}">
+                            <input class="form-control" name="query" type="search" placeholder="search recipe title"/>
+                            
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                         </form>
+                    </div>
                     @endif
                 </div>
                 <div class="collapse navbar-collapse navbar-main-collapse">

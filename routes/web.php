@@ -58,5 +58,7 @@ Route::delete('/delete-image/{id}', [App\Http\Controllers\SubmitRecipeController
 Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
 Route::post('/replies', [App\Http\Controllers\ReplyController::class,'store'])->name('replies.store');
 
-Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('recipes.search.get');
-Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('recipes.search.post');
+//Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('recipes.search.get');
+//Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('recipes.search.post');
+
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'search']);

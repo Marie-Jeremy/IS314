@@ -81,13 +81,28 @@
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                         <i class="fa fa-bars"></i>
                     </button>
+                  
                     <a class="navbar-brand" href="index.html">
                         Food<span>Recipe</span>
                     </a>
+                  
                     @if(auth()->check())
-                        <p><span class="user-name"><b>{{ auth()->user()->username }}</b></span></p>
+                    <div style="float: right;">
+                        <p><span class="user-name"><b>{{ auth()->user()->username }}</b></span></p>                        
+                        <form class="form-inline my-2 my-lg-0" type="get" action="{{ url('/search') }}">
+                            <input class="form-control" name="query" type="search" placeholder="search recipe title"/>
+                            
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                         </form>
+                    </div>
                     @endif
+
+                    
+                  
+                    
+                    
                 </div>
+              
                 <div class="collapse navbar-collapse navbar-main-collapse">
                     <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -100,10 +115,17 @@
                             <a href="/my-recipe">My Recipes</a>
                         </li>
                         <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form></li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                       
+                       
                     </ul>
+                    <!-- <form class="form-inline my-2 my-lg-0" type="get" action="{{ url('/search') }}">
+                        <input class="form-control mr-sm-2" name="query" type="search" placeholder="search recipe title"/>
+                        <button type="submit">Search<button>
+                  </form> -->
                 </div>
             </div>
         </nav>
