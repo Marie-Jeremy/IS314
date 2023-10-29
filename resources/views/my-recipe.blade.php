@@ -131,6 +131,13 @@
 <section class="wrapper-main-contents all-chefs">
 <div class="container">
 <div class="line-heading">
+                <!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('user-home') }}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My Recipes</li>
+    </ol>
+</nav>
     <h2>My Recipes</h2>
 </div>
 @foreach ($recipes as $recipe)

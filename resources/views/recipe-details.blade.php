@@ -6749,8 +6749,12 @@ div.widget-measurements .default-btn {
 </div>
 
 <section class="wrapper-main-contents all-chefs">
+
     <div class="container">
 <div class="wrapper-head-chef">
+<div class="breadcrumbs">
+{{ Breadcrumbs::render('recipe_details', $recipe) }}
+</div>
     <div class=head-chef>
         <div class="left-side">
             <a href="#"><img class="responsive-image" src="{{ asset('storage/' . $recipe->image) }}" alt="Recipe Image"/></a>

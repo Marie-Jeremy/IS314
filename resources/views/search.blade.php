@@ -149,11 +149,7 @@
                                                 <li class="author"><a href="#">{{ App\Models\User::find($recipe->user_id)->username }}</a></li>
                                                 <li class="calendar">{{ $recipe->created_at->format('d/m/Y') }}</li>
                                             </ul>
-                                            @if ($recipe->video_recipe === 'yes' && !empty($recipe->video_embed_code))
-                                                <div class="recipe-video">
-                                                    <a href="{{ $recipe->video_embed_code }}" target="_blank" class="btn btn-primary">Watch Video</a>
-                                                </div>
-                                            @endif
+                                           
                                         </div>
                                         <!-- Other meta details here... -->
                                     </div>

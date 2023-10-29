@@ -85,7 +85,7 @@
                     <a class="navbar-brand" href="index.html">
                         Food<span>Recipe</span>
                     </a>
-                    <p>Call Us Now <b>+215 (362) 4579</b></p>
+                    <p><b>Savory-Secrets</b></p>
                 </div>
                 <div class="collapse navbar-collapse navbar-main-collapse">
                     <ul class="nav navbar-nav navbar-right">

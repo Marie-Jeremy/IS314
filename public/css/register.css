@@ -179,4 +179,25 @@ form .user-details .input-box{
   .container .content .category{
     flex-direction: column;
   }
+
+  /* Add this CSS to your Blade template or an external CSS file */
+  .checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Adjust the spacing as needed */
+}
+
+.checkbox input {
+    margin-right: 5px; /* Adjust the spacing between the checkbox and label */
+}
+
+/* CSS to make the asterisk red */
+.required {
+color: red;
+}
 }

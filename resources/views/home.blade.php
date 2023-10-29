@@ -15,25 +15,22 @@
     <link href="css/icons.css" rel="stylesheet" type="text/css">
     <link href="/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css"  />
     <link href="/css/flexslider.css" rel="stylesheet" type="text/css" />
-    <link href="/css/owl.carousel.css" rel="stylesheet" type="text/css" >
-    <!--[if lt IE 8]><!-->
+
     <link href="/ie7/ie7.css" rel="stylesheet" >
-    <!--<![endif]-->
+
     <link href="/css/home.css" rel="stylesheet" type="text/css">
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 
-<body data-spy="scroll" data-target=".navbar-fixed-top">
+<body>
     <header>
         <div class="top-bar">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-6 address">
-                        <i class="ti-location-pin"></i> 2109 WS 09 Oxford Rd #127 ParkVilla Hills, MI 48334
-                    </div>
+                <div class="col-sm-6 address">
+                        
+                        </div>
                     <div class="col-sm-6 social">
                         <ul>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -56,7 +53,7 @@
                     <a class="navbar-brand" href="index.html">
                         Food<span>Recipe</span>
                     </a>
-                    <p>Call Us Now <b>+215 (362) 4579</b></p>
+                    <p> <b>Savory-Secrets</b></p>
                 </div>
                 <div class="collapse navbar-collapse navbar-main-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -88,7 +85,12 @@
             </div>
         </nav>
     </header>
-    <div class="clear"></div>
+
+    <div class="clear">
+    <div class="breadcrumbs">
+                        {!! Breadcrumbs::render('home') !!}
+                    </div>
+    </div>
     <div id="page-content">
         <section class="flexslider">
             <ul class="slides">
@@ -99,7 +101,7 @@
                             <b></b>
                             <h3>Breakfast Recipe</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris hendrerit fringilla ligula, nec congue leo pharetra in.</p>
-                            <a href="get-premium" class="ti-arrow-right"></a>
+                            <a href="/breakfast" class="ti-arrow-right"></a>
                         </div>
                     </div>
                 </li>
@@ -110,7 +112,7 @@
                             <b></b>
                             <h3>Lunch Recipe</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris hendrerit fringilla ligula, nec congue leo pharetra in.</p>
-                            <a href="/get-premium" class="ti-arrow-right"></a>
+                            <a href="/lunch" class="ti-arrow-right"></a>
                         </div>
                     </div>
                 </li>
@@ -121,7 +123,7 @@
                             <b></b>
                             <h3>Dinner Recipe</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris hendrerit fringilla ligula, nec congue leo pharetra in.</p>
-                            <a href="/get-premium" class="ti-arrow-right"></a>
+                            <a href="/dinner" class="ti-arrow-right"></a>
                         </div>
                     </div>
                 </li>
@@ -132,11 +134,12 @@
                             <b></b>
                             <h3>Dessert Recipe</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris hendrerit fringilla ligula, nec congue leo pharetra in.</p>
-                            <a href="/get-premium" class="ti-arrow-right"></a>
+                            <a href="/dessert" class="ti-arrow-right"></a>
                         </div>
                     </div>
                 </li>
             </ul>
+        </div>
         </section>
 
 
@@ -146,25 +149,23 @@
                     <div id="parentVerticalTab">
                         <h2>More Ideas</h2>
                         <ul class="resp-tabs-list hor_1 col-sm-3 col-md-3 col-lg-3">
-                            <li><i class="ti-bag"></i>Salads</li>
-                            <li><i class="fa fa-plane fa fa-plane"></i> Pasta</li>
-                            <li><i class="ti-heart-broken"></i>Dessert</li>
-                            <li><i class="ti-car"></i>Soup</li>
+                            <li>Salads</li>
+                            <li> Pasta</li>
+                            <li>Dessert</li>
+                            <li>Soup</li>
                         </ul>
                         <div class="col-sm-5 col-md-5 col-lg-5 resp-tabs-container hor_1">
                             <div>
                                 <div class="prod-tab-content">
                                     <h4>
-                                        <span class="prod-cion"><i class="ti-bag"></i></span>
+                                        <span class="prod-cion"></span>
                                         Salads
                                     </h4>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. Integer</p>
                                     <p>et placerat suscipit. Sed sodales scelerisque commodo. Nam porta cursus lectus. </p>
-                                    <p class="tel">
-                                        <i class="fa fa-phone"></i> +123 456 7890 <span>Toll Free</span>
-                                    </p>
+                                    
                                     <p>
-                                        <a class="btn-default" href="product-houseinsurance.html">Get Recipe</a>
+                                        <a class="btn-default" href="/login">Get Recipe</a>
                                     </p>
                                 </div>
                                 <img src="/images/img-17.jpg" alt="" class="img-responsive" />
@@ -172,16 +173,14 @@
                             <div>
                                 <div class="prod-tab-content">
                                     <h4>
-                                        <span class="prod-cion"><i class="fa fa-plane"></i></span>
+                                        <span class="prod-cion"></span>
                                         Pasta
                                     </h4>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. Integer</p>
                                     <p>et placerat suscipit. Sed sodales scelerisque commodo. Nam porta cursus lectus. </p>
-                                    <p class="tel">
-                                        <i class="fa fa-phone"></i> +123 456 7890 <span>Toll Free</span>
-                                    </p>
+                                    
                                     <p>
-                                        <a class="btn-default" href="#">Get Recipe</a>
+                                        <a class="btn-default" href="/login">Get Recipe</a>
                                     </p>
                                 </div>
                                 <img src="/images/img-18.jpg" alt="" class="img-responsive" />
@@ -189,16 +188,14 @@
                             <div>
                                 <div class="prod-tab-content">
                                     <h4>
-                                        <span class="prod-cion"><i class="ti-heart-broken"></i></span>
+                                        <span class="prod-cion"></span>
                                         Dessert
                                     </h4>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. Integer</p>
                                     <p>et placerat suscipit. Sed sodales scelerisque commodo. Nam porta cursus lectus. </p>
-                                    <p class="tel">
-                                        <i class="fa fa-phone"></i> +123 456 7890 <span>Toll Free</span>
-                                    </p>
+                                 
                                     <p>
-                                        <a class="btn-default" href="#">Get Recipe</a>
+                                        <a class="btn-default" href="/login">Get Recipe</a>
                                     </p>
                                 </div>
                                 <img src="/images/img-19.jpg" alt="" class="img-responsive" />
@@ -206,16 +203,14 @@
                             <div>
                                 <div class="prod-tab-content">
                                     <h4>
-                                        <span class="prod-cion"><i class="ti-car"></i></span>
+                                        <span class="prod-cion"></span>
                                         Soup
                                     </h4>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. Integer</p>
                                     <p>et placerat suscipit. Sed sodales scelerisque commodo. Nam porta cursus lectus. </p>
-                                    <p class="tel">
-                                        <i class="fa fa-phone"></i> +123 456 7890 <span>Toll Free</span>
-                                    </p>
+                                  
                                     <p>
-                                        <a class="btn-default" href="#">Get Recipe</a>
+                                        <a class="btn-default" href="/login">Get Recipe</a>
                                     </p>
                                 </div>
                                 <img src="/images/img-20.jpg" alt="" class="img-responsive" />
@@ -225,34 +220,7 @@
                 </div>
             </div>
         </section>
-        <section class="services">
-            <h2 class="text-center">Our Best Services</h2>
-            <div class="container">
-                <div class="row">
-                   
-                    <div class="col-sm-3 services-dtl">
-                        <span class="ti-wallet"></span>
-                        <h3>Lorem Ipsum</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur</p>
-                    </div>
-                    <div class="col-sm-3 services-dtl">
-                        <span class="fa fa-laptop"></span>
-                        <h3>Online Account</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur</p>
-                    </div>
-                    <div class="col-sm-3 services-dtl">
-                        <span class="ti-lock"></span>
-                        <h3>Strongly Secure</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur</p>
-                    </div>
-                    <div class="col-sm-3 services-dtl">
-                        <span class="ti-book"></span>
-                        <h3>Understandable Terms</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
         <section class="testimonials">
             <div class="container">
                 <div class="row">
@@ -315,122 +283,79 @@
                 </div>
             </div>
         </section>
-        <section class="recent-news">
-            <h2 class="text-center">Recent News</h2>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="news-sec-box">
-                            <span class="ti-pencil"></span>
-                            <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
-                            <p>24 Dec 2015</p>
-                            <div class="news-by">
-                                <a href="#"><img src="/images/people-03.jpg" /></a>
-                                <a href="#">By Linda</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="news-sec-box">
-                            <span class="ti-image"></span>
-                            <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
-                            <p>24 Dec 2015</p>
-                            <div class="news-by">
-                                <a href="#"><img src="/images/people-03.jpg" /></a>
-                                <a href="#">By Linda</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="news-sec-box">
-                            <span class="ti-comments"></span>
-                            <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
-                            <p>24 Dec 2015</p>
-                            <div class="news-by">
-                                <a href="#"><img src="/images/people-03.jpg" /></a>
-                                <a href="#">By Linda</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="news-sec-box">
-                            <span class="ti-control-play"></span>
-                            <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
-                            <p>24 Dec 2015</p>
-                            <div class="news-by">
-                                <a href="#"><img src="/images/people-03.jpg" /></a>
-                                <a href="#">By Linda</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
       
     </div>
     <div class="clear"></div>
 
-		<footer>
-        <div class="container">
-            <div class="row contact-sec">
-                <div class="col-md-5 col-lg-5">
-                    <h2>Food<span>Recipe</span></h2>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p>E104 Dharti -2 , Nr Silverstar Mall Chandlodia - Ahmedabad
-                                <br/>Zip - 382481</p>
+		<!--footer-->
+<div class="footer footer-variant-one footer-fluid">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="text-center">
+                <a class="logo-footer wow animated zoomIn" href="index.html"><img src="" alt=""/></a>
+                <p class="wow animated flipInX">
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                    <br/>
+                    magna aliquyam erat, with an extra ordinary design and quality development features in low
+                </p>
+
+            </div>
+
+            <div class="subs-social-options">
+                <div class="row custom-row-footer">
+                    <div class="col-md-6 custom-col-options">
+                        <div class="left-side">
+                            <div class="widget widget-footer news-letter-signup wow animated flipInY">
+                                <h2>Newsletter Signup</h2>
+
+                                <form class="subs-form" action="#" method="post">
+                                    <div class="email-field">
+                                        <input type="email" name="email" placeholder="Enter you email address"/>
+                                        <button><i class="fa fa-paper-plane-o"></i></button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-phone"></i> +91 123 456 7890</a></li>
-                                <li><a href="#"><i class="ti-email"></i> info@bootstrapmart.com</a></li>
-                            </ul>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="right-side">
+                            <div class="widget widget-footer social-icons">
+                                <h2 class="wow animated fadeInRight">Get Social with Us</h2>
+                                <ul>
+                                    <li class="wow animated bounceInRight"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li class="wow animated bounceInRight animation-delay100ms"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li class="wow animated bounceInRight animation-delay200ms" ><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                    <li class="wow animated bounceInRight animation-delay300ms"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li class="wow animated bounceInRight animation-delay400ms" ><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+                                    <li class="wow animated bounceInRight animation-delay500ms"><a href="#"><i class="fa fa-flickr"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <a href="#" class="btn-default">Contact Us</a>
-                </div>
-                <div class="col-md-5 col-lg-5 col-md-offset-2 col-lg-offset-2">
-                    <h2>Food<span>Recipe</span></h2>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p>E104 Dharti -2 , Nr Silverstar Mall Chandlodia - Ahmedabad
-                                <br/>Zip - 382481</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-phone"></i> +91 123 456 7890</a></li>
-                                <li><a href="#"><i class="ti-email"></i> info@bootstrapmart.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <a href="#" class="btn-default">Contact Us</a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8 col-lg-8">
-                    <ul class="footer-nav">
-                        <li><a href="/home">Home</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="#">Compnies represented</a></li>
-                        <li><a href="contact-us.html">Contact us</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Products</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 col-lg-2 col-md-offset-2 col-lg-offset-2">
-                    <ul class="footer-social">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                    </ul>
-                </div>
+            <div class="footer-copyright text-center">
+                <p>&copy; Copyright 2015 All Rights Reserved by <a href="#">Majestic Themes</a></p>
+            </div>
+            <div class="corner-image wow animated fadeInRight">
+                <img src="images/footer-corner-image.jpg" alt="image"/>
             </div>
         </div>
-        
-    </footer>
+    </div>
+</div>
+<!--footer ends-->
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/jquery.meanmenu.js"></script>
+<script src="js/jquery.selectric.min.js"></script>
+<script src="js/wow.js"></script>
+<script src="js/jquery.form.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/jquery.swipebox.js"></script>
+<script src="js/custom.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.2.1/bootstrap-hover-dropdown.min.js"></script>

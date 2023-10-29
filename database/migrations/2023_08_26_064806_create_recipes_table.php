@@ -17,7 +17,6 @@ class CreateRecipesTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('short_description');
-            $table->text('content');
             $table->unsignedBigInteger('user_id');
             $table->string('image')->nullable();
             $table->json('ingredients');

@@ -31,7 +31,6 @@ class SubmitRecipeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'short-des' => 'required',
-            'content' => 'nullable',
             'fileUpload' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'ingredients.*' => 'required',
             'steps.*' => 'required',
@@ -52,7 +51,6 @@ class SubmitRecipeController extends Controller
         $recipe->user_id = auth()->user()->id;
         $recipe->title = $request->input('title');
         $recipe->short_description = $request->input('short-des');
-        $recipe->content = $request->input('content');
     
         // Handling image upload
         if ($request->hasFile('fileUpload')) {
@@ -142,7 +140,7 @@ public function userHome()
     if ($user) {
         // Get the user's selected recipe type and cuisine preferences
         $cuisines = is_array($user->cuisine) ? $user->cuisine : [$user->cuisine];
-        $recipeTypes = !empty($user->recipe_type) ? explode(',', $user->recipe_type) : [];
+$recipeTypes = !empty($user->recipe_type) ? explode(',', $user->recipe_type) : [];
         // Query recipes based on user preferences
         $query = Recipe::query();
 
@@ -200,8 +198,6 @@ public function updateRecipe(Request $request, $id)
     // Update other fields
     $recipe->title = $request->input('title');
     $recipe->short_description = $request->input('short-des');
-    $recipe->content = $request->input('content');
-    // ... update other fields ...
 
     // Update ingredients (assuming ingredients are stored as JSON)
     $ingredients = $request->input('ingredients');

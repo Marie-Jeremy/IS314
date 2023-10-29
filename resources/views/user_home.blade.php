@@ -123,98 +123,19 @@
     </div>
 </div>
 
-<div class="advance-search">
-    <!--advance search form-->
-
-    <div class="container">
-        <div class="wrapper-search">
-            <div class="container-tags">
-            <span class="tag">
-                <span class="tag-inner">Find Recipes <i class="fa fa-angle-down"></i></span>
-            </span>
-
-            </div>
-            <div class="outer-advance-search">
-
-            <form action="#" method="get" id="advance-search">
-                    <fieldset>
-                        <div class="inner-advance-search">
-
-                            <div class="form-field">
-                                <label for="ingredient">ingredient</label>
-                                <select name="ingredient" id="ingredient" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Ingredient</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <div class="form-field">
-                                <label for="course">course</label>
-                                <select name="course" id="course" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Course</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <div class="form-field">
-                                <label for="cuisine">cuisine</label>
-                                <select name="cuisine" id="cuisine" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Cuisine</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <div class="form-field">
-                                <label for="time">Cooking Time</label>
-                                <select name="time" id="time" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Cooking Time</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <div class="form-field">
-                                <label for="calories">calories</label>
-                                <select name="calories" id="calories" class="advance-selectable">
-                                    <option value="ing1" selected="selected">Any Calories</option>
-                                    <option value="ing2">Butter</option>
-                                    <option value="ing3">Cheese</option>
-                                    <option value="ing4">Cream</option>
-                                    <option value="ing5">Yeast</option>
-                                </select>
-                            </div>
-
-                            <button type="submit"><i class="fa fa-search"></i></button>
-
-                        </div>
-                    </fieldset>
-
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!--advance search form ends-->
-</div>
-
 <!--banner ends-->
 <div class="recipes-home-body inner-page">
 <div class="container">
 <div class="row">
 <div class="col-md-8 col-lg-9">
 <div class="recipe-set">
-
+<div class="breadcrumbs">
+    {!! Breadcrumbs::render('user_home') !!}
+</div>
+<form class="form-inline my-2 my-lg-0" type="get" action="{{ url('/searchTitle') }}">
+    <input class="form-control" name="query" type="search" placeholder="search recipe title"/>
+        <button type="submit"><i class="fa fa-search"></i></button>
+</form>
 <h2>Recent Recipes</h2>
 
 <div class="recipe-listing listing-list">
@@ -237,12 +158,10 @@
                 <li class="cuisine">Cuisine: {{ $recipe->cuisine }} </li>
                 <li class="recipe-type">Recipe Type: {{ $recipe->recipe_type }} </li>
             </ul>    
-        @if ($recipe->video_recipe === 'yes' && !empty($recipe->video_embed_code))
-    <div class="recipe-video">
-        <a href="{{ $recipe->video_embed_code }}" target="_blank" class="btn btn-primary">Watch Video</a>
+           
     </div>
-@endif
-            </div>
+
+           
             <!-- Other meta details here... -->
     </div>
 </div> 

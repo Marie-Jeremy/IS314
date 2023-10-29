@@ -1,100 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<style>
-    body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
-    background-image: url('/images/food1.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-#navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    height: 60px;
-    padding: 0 30px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-#navbar h1 {
-    margin: 0;
-    font-size: 24px;
-    color: rgb(255, 255, 255);
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
-#navbar ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-#navbar ul li {
-    margin-left: 20px;
-}
-#navbar ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease-in-out;
-}
-#navbar ul li a:hover {
-    color: #ffc107;
-}
-#main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
-}
-#main h2 {
-    font-size: 64px;
-    color: #fff;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    margin-bottom: 30px;
-    letter-spacing: 4px;
-}
-#main p {
-    font-size: 24px;
-    color: #000000;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    line-height: 1.5;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-#cta {
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#cta a {
-    font-size: 24px;
-    color: #fff;
-    background-color: #ffc107;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    border-radius: 30px;
-    padding: 15px 30px;
-    text-decoration: none;
-    transition: all 0.2s ease-in-out;
-}
-#cta a:hover {
-    background-color: #fff;
-    color: #000;
-}
-</style>
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <title>Food Recipe Website - Savory Secrets</title>
     <link rel="shortcut icon" href="images/favicon.png" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -104,8 +14,6 @@
     <link href="/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css"  />
     <link href="/css/flexslider.css" rel="stylesheet" type="text/css" />
     <link href="/css/owl.carousel.css" rel="stylesheet" type="text/css" >
-    <link rel="stylesheet" href="css/main.css"/>
-
     <!--[if lt IE 8]><!-->
     <link href="/ie7/ie7.css" rel="stylesheet" >
     <!--<![endif]-->
@@ -114,14 +22,45 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-</head>
+    <!--google fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!--jquery ui stylesheet-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-<body data-spy="scroll" data-target=".navbar-fixed-top">
-    <header>
+    <!-- site favicon -->
+    <link rel="icon" href="images/favicon.png" />
+
+    <!--selectric stylesheet-->
+    <link rel="stylesheet" href="css/selectric.css"/>
+    <!--font awesome stylesheet-->
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <!--swipe box stylesheet-->
+    <link rel="stylesheet" href="css/swipebox.css"/>
+    <!-- mean menu stylesheet-->
+    <link rel="stylesheet" href="css/meanmenu.css"/>
+    <!--slick slider stylesheet-->
+    <link rel="stylesheet" href="css/slick.css"/>
+    <link rel="stylesheet" href="css/slick-theme.css"/>
+    <!--bootstrap stylesheets-->
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.css"/>
+    <!--animate stylesheet-->
+    <link rel="stylesheet" href="css/animate.css"/>
+    <!--main stylesheet-->
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+
+<!--header-->
+<header>
         <div class="top-bar">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 address">
+                    
                     </div>
                     <div class="col-sm-6 social">
                         <ul>
@@ -142,62 +81,128 @@
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                         <i class="fa fa-bars"></i>
                     </button>
+                  
                     <a class="navbar-brand" href="index.html">
-                        Food<span>Recipes</span>
+                        Food<span>Recipe</span>
                     </a>
-                    <p><b>Savory-Secrets</b></p>
+                  
+                    @if(auth()->check())
+                    <div style="float: right;">
+                        <p><span class="user-name"><b>{{ auth()->user()->username }}</b></span></p>                        
+                        
+                    </div>
+                    @endif
+
+                    
                 </div>
+              
                 <div class="collapse navbar-collapse navbar-main-collapse">
                     <ul class="nav navbar-nav navbar-right">
                     <li>
-                            <a href="/home">Home</a>
+                            <a href="/user_home">Home</a>
                         </li>
                         <li>
-                            <a href="/breakfast">Breakfast</a>
+                            <a href="/submit-recipe">Submit Recipe</a>
                         </li>
                         <li>
-                            <a href="/lunch">Lunch</a>
+                            <a href="/my-recipe">My Recipes</a>
                         </li>
-                        <li>
-                            <a href="/dinner">Dinner</a>
+                        <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         </li>
-                        <li>
-                            <a href="/dessert">Dessert</a>
-                        </li>
-                        @auth <!-- Check if user is logged in -->
-        <li>
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </li>
-        @else
-        <li>
-            <a href="/login">Login</a>
-        </li>
-        <li>
-            <a href="/register">Register</a>
-        </li>
-        @endauth <!-- End of authentication check -->
-    </ul>
+                       
+                       
+                    </ul>
+                    <!-- <form class="form-inline my-2 my-lg-0" type="get" action="{{ url('/search') }}">
+                        <input class="form-control mr-sm-2" name="query" type="search" placeholder="search recipe title"/>
+                        <button type="submit">Search<button>
+                  </form> -->
                 </div>
             </div>
         </nav>
     </header>
+<!--header ends-->
 
-    <div class="clear"></div>
-<div id="page-content">
-    <main id="main">
-        <h2>Recipes & Cooking Ideas</h2>
-        <p>We know the deal. We feel your pain. Here are our superstar workhorse recipes, designed and tested to help you cook a great family meal.</p>
-        <div id="cta">
-            <a href="/home">Get Recipes</a>
+<!--banner-->
+<div class="clear"></div>
+    <div id="page-content">
+<div class="banner banner-blog">
+    <div class="container ">
+    
+        <div class="main-heading">
+            <h1>Recipe search result details page</h1>
         </div>
-    </main>
 
+    </div>
 </div>
 
-   <!--footer-->
+@if(isset($successMessage))
+<div class="alert alert-success">
+    {{ $successMessage }}
+</div>
+@endif
+
+<section class="wrapper-main-contents all-chefs">
+<div class="container">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('user-home') }}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Search Result</li>
+    </ol>
+</nav>
+<div class="line-heading">
+    <h2>Recipes Search Result</h2>
+</div>
+@foreach ($recipes as $recipe)
+<div class="wrapper-head-chef">
+    <div class=head-chef>
+        <div class="left-side">
+            <a href="#"><img src="{{ asset('storage/' . $recipe->image) }}" alt="Recipe Image"/></a>
+        </div>
+        <div class="right-side">
+            <h3><a href="#">{{ $recipe->title }}</a></h3>
+            
+            <div class="separator-chef"></div>
+            <p>
+            {{ $recipe->short_description }}
+            </p>
+            @if (!empty($recipe->yield))
+        <p>Yield: {{ $recipe->yield }}</p>
+    @endif
+    @if (!empty($recipe->servings))
+        <p>Servings: {{ $recipe->servings }}</p>
+    @endif
+    @if (!empty($recipe->prep_time))
+        <p>Prep-time: {{ $recipe->prep_time }}</p>
+    @endif
+    @if (!empty($recipe->cook_time))
+        <p>Cook-time: {{ $recipe->cook_time }}</p>
+    @endif
+    @if (!empty($recipe->ready_in))
+        <p>Ready-in: {{ $recipe->ready_in }}</p>
+    @endif
+
+            <ul class="social-icons-chef">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+        
+                    @endforeach
+                    </div>
+</div>
+</div>
+
+
+
+<!--footer-->
 <div class="footer footer-variant-one footer-fluid">
     <div class="container">
         <div class="footer-inner">
@@ -255,8 +260,10 @@
     </div>
 </div>
 <!--footer ends-->
+
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/jquery-ui.js"></script>
+<script src="js/flexslider/jquery.flexslider-min.js"></script>
 <script src="js/slick.min.js"></script>
 <script src="js/jquery.meanmenu.js"></script>
 <script src="js/jquery.selectric.min.js"></script>
@@ -265,14 +272,15 @@
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/jquery.swipebox.js"></script>
 <script src="js/custom.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.2.1/bootstrap-hover-dropdown.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
-    <script src="/js/jquery.flexslider-min.js"></script>
-    <script src="/js/easyResponsiveTabs.js"></script>
-    <script src="/js/owl.carousel.js"></script>
-    <script src="/js/custom.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.2.1/bootstrap-hover-dropdown.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script src="/js/jquery.flexslider-min.js"></script>
+<script src="/js/easyResponsiveTabs.js"></script>
+<script src="/js/owl.carousel.js"></script>
+<script src="/js/custom.js"></script>
+
 </body>
 </html>

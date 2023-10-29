@@ -128,7 +128,15 @@
 <div class="container">
 <div class="row">
 <div class="col-md-8 col-lg-9">
+  
     <div class="recipe-set submit-recipe-set">
+            <!-- Breadcrumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('user-home') }}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Submit Recipe</li>
+    </ol>
+</nav>
         <h2>Submit Recipe</h2>
        
         <p><strong>Asterisk<span class="required">( * )</span> Indicates a required field.</p>
