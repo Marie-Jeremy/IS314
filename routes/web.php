@@ -79,4 +79,3 @@ Route::post('/replies', [App\Http\Controllers\ReplyController::class,'store'])->
 
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('recipes.search.get');
 Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('recipes.search.post');
-Route::get('/searchTitle', [App\Http\Controllers\SearchController::class, 'searchTitle']);

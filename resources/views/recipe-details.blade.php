@@ -6719,11 +6719,17 @@ div.widget-measurements .default-btn {
                         <li>
                             <a href="/my-recipe">My Recipes</a>
                         </li>
+                       
                         <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
             </form></li>
                     </ul>
+                  <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" name="query" type="search" placeholder="search recipe title"/>
+                    <button type="submit">Search<button>
+                  </form>
+
                 </div>
             </div>
         </nav>
